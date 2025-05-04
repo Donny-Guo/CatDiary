@@ -1,5 +1,4 @@
 flask
 dotenv
 openai
-chattts
-torchaudio
+jsonify

@@ -1,17 +1,15 @@
 import os
+from openai import OpenAI
 from dotenv import load_dotenv
-import openai
-from chattts import ChatTTS
-import torchaudio
+import requests
 
-# Load OpenAI API key
+# Load your .env file (MUST be in same or parent directory)
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# Load ChatTTS model once
-tts_model = ChatTTS.load_from_pretrained()
+# Initialize OpenAI client
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-# Accepts an emotion string (e.g. "sleepy", "grumpy") and generates a diary entry
+
 def generate_cat_diary(emotion: str) -> str:
     prompt = f"""
 You are a highly expressive cat with a human-level inner monologue. 
@@ -21,25 +19,36 @@ You may be dramatic, sarcastic, poetic, or emotionally over-the-top—but still 
 Example: “My human served me the same can again. I meowed once. Then I meowed twice. Nothing. I might perish.”
 Now write today's diary entry:
 """
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.9,
     )
-    return response['choices'][0]['message']['content'].strip()
+    return response.choices[0].message.content.strip()
 
-# Converts text into audio using ChatTTS and returns the audio file path
-def generate_audio(text: str, filename: str = "cat_diary.wav") -> str:
-    wav, sr = tts_model.synthesize(text, speaker="emo-cat")
+
+def generate_audio(text: str, filename: str = "cat_diary.mp3") -> str:
+    # Make sure output folder exists
     os.makedirs("audio", exist_ok=True)
     output_path = os.path.join("audio", filename)
-    torchaudio.save(output_path, wav.unsqueeze(0), sr)
+
+    # Use OpenAI TTS
+    response = client.audio.speech.create(
+        model="tts-1",
+        voice="onyx",  # Try others: alloy, echo, fable, nova, shimmer
+        input=text,
+        response_format="mp3",
+    )
+
+    # Save the audio
+    with open(output_path, "wb") as f:
+        f.write(response.content)
+
     return output_path
 
-# Combines diary + audio generation into a single call
+
 def generate_cat_audio_diary(emotion: str):
     text = generate_cat_diary(emotion)
-    sanitized = emotion.replace(" ", "_").lower()
-    filename = f"{sanitized}_diary.wav"
-    audio_path = generate_audio(text, filename)
+    safe_filename = f"{emotion.replace(' ', '_').lower()}_diary.mp3"
+    audio_path = generate_audio(text, safe_filename)
     return text, audio_path

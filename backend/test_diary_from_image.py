@@ -1,9 +1,11 @@
-from cat_diary import generate_cat_audio_diary_from_image
+from cat_diary import generate_cat_diary_all_from_image
 
-image_path = "backend/test_cat.jpg"  # Replace with your uploaded image filename
+image_path = "backend/test_cat.jpg"
 
-text, audio_path = generate_cat_audio_diary_from_image(image_path)
+result = generate_cat_diary_all_from_image(image_path)
 
-print("=== Cat Diary (Generated from Image) ===")
-print(text)
-print(f"Audio saved at: {audio_path}")
+print("=== Detected Emotion ===")
+print(result["emotion"])
+print("\n=== AI Cat Diary ===")
+print(result["text"])
+print(f"\n🎧 Audio saved at: {result['audio_path']}")

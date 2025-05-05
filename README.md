@@ -1,7 +1,7 @@
 # 🐾 CatDiary — Because Your Cat Deserves a Voice (Even If It’s a Little Judgy)
 
 Ever stared into your cat’s eyes and thought,
-**“She’s definitely silently judging me... but what exactly is she thinking?”**
+“She’s definitely silently judging me... but what exactly is she thinking?”
 
 CatDiary is an overengineered solution to a deeply unserious problem:
 Just upload a photo of your cat.
@@ -17,7 +17,7 @@ You’ll find out — whether you’re ready or not.
 Built for Dumb Hackathon. No cats were emotionally harmed.
 Sponsored by Stytch... but emotionally powered by tuna withdrawal.
 
-Built for Dumb Hackathon, this app answers the question no one asked:  
+**"Built for Dumb Hackathon, this app answers the question no one asked: "** 
 **“What is my cat really thinking?”**
 
 ---

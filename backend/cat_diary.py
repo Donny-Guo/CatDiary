@@ -11,6 +11,7 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 VOICE_MAP = {
     "angry": "onyx",
     "annoyed": "onyx",
+    "sad":"alloy",
     "grumpy": "onyx",
     "dramatic": "fable",
     "jealous": "nova",
@@ -21,6 +22,7 @@ VOICE_MAP = {
     "sarcastic": "fable",
     "cute": "nova",
     "mysterious": "alloy",
+    "curious": "echo",
     "default": "echo",
 }
 

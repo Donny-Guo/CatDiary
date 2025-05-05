@@ -70,7 +70,7 @@ def authenticate():
 #     session['user_id'] = 'user123'  # ← mock a logged-in user
 
 def create_user_dirs(user_id):
-    base_path = os.path.join('diary', user_id)
+    base_path = os.path.join('../diary', user_id)
     os.makedirs(os.path.join(base_path, 'images'), exist_ok=True)
     os.makedirs(os.path.join(base_path, 'audio'), exist_ok=True)
     return base_path
@@ -82,7 +82,7 @@ def serve_audio(filename):
     if not user_id:
         return jsonify({"error": "Unauthorized"}), 401
 
-    audio_folder = os.path.join('diary', user_id, 'audio')
+    audio_folder = os.path.join('../diary', user_id, 'audio')
     full_path = os.path.join(audio_folder, filename)
 
     print("[DEBUG] Trying to serve:", full_path)

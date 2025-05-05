@@ -9,7 +9,26 @@
 </head>
 
 <body>
-  <div id="app"></div>
+<body>
+  <h1>📔 Welcome to Your Diary</h1>
+
+  {% if user_id %}
+  <p>✅ Logged in as: <strong>{{ user_id }}</strong></p>
+
+  <form method="POST" action="/logout">
+    <button type="submit">Logout</button>
+  </form>
+
+  <hr />
+  <div id="app"></div> <!-- Vite mounts dynamic UI here -->
+
+  {% else %}
+  <h2>Login via Email Magic Link</h2>
+  <form method="POST" action="/login">
+    <input type="email" name="email" placeholder="Enter your email" required />
+    <button type="submit">Send Magic Link</button>
+  </form>
+  {% endif %}
 </body>
 
 </html>

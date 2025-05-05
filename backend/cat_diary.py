@@ -128,9 +128,7 @@ def choose_voice_from_tone(tone: str) -> str:
 
 
 # Step 5: Generate audio using selected voice
-def generate_audio(text: str, voice: str, filename: str = "cat_diary.mp3") -> str:
-    os.makedirs("audio", exist_ok=True)
-    output_path = os.path.join("audio", filename)
+def generate_audio(text: str, voice: str, audio_path: str) -> str:
 
     response = client.audio.speech.create(
         model="tts-1",
@@ -139,20 +137,19 @@ def generate_audio(text: str, voice: str, filename: str = "cat_diary.mp3") -> st
         response_format="mp3",
     )
 
-    with open(output_path, "wb") as f:
+    with open(audio_path, "wb") as f:
         f.write(response.content)
 
-    return output_path
 
 
 # Step 6: End-to-end generation from image to audio
-def generate_cat_diary_all_from_image(image_path: str):
+def generate_cat_diary_all_from_image(image_path: str, audio_path: str):
     tone = detect_cat_tone_from_image(image_path)
     persona_prompt = generate_prompt_from_image(image_path, tone)
     diary_text = generate_cat_diary(persona_prompt, image_path)
     voice = choose_voice_from_tone(tone)
     filename = os.path.splitext(os.path.basename(image_path))[0] + "_diary.mp3"
-    audio_path = generate_audio(diary_text, voice, filename)
+    generate_audio(diary_text, voice, audio_path)
 
     return {
         "tone": tone,

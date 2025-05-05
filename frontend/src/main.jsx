@@ -12,20 +12,21 @@ import './index.css'
 const app = document.getElementById('app');
 const diaryForm = `
   <div>
-    <h2>📝 Today’s Diary</h2>
+    <h2>📸 Upload Cat Image</h2>
     <input type="file" id="imageUpload" accept="image/*"><br>
-    <img id="previewImg" width="200"/><br>
+    <img id="previewImg" width="200"/><br><br>
 
-    <label for="mood">Mood:</label>
-    <select id="mood">
-      <option>😊</option><option>😢</option><option>😠</option><option>😴</option>
-    </select><br>
+    <button id="generateBtn">🔮 Generate Diary</button><br><br>
 
-    <textarea id="text" placeholder="Write your diary..."></textarea><br>
+    <h2>📝 Generated Diary</h2>
+    <textarea id="text" placeholder="Diary will appear here..." rows="6" cols="40"></textarea><br>
+    <p><strong>Tone:</strong> <span id="tone"></span></p>
+    <p><strong>Persona:</strong> <span id="persona"></span></p>
+    <p><strong>Voice:</strong> <span id="voice"></span></p>
 
-    <audio id="audioPlayer" controls></audio><br>
+    <audio id="audioPlayer" controls></audio><br><br>
 
-    <button id="saveBtn">Save</button>
+    <button id="saveBtn">💾 Save Diary</button>
   </div>
 `;
 
@@ -39,32 +40,53 @@ document.getElementById('imageUpload').addEventListener('change', e => {
   }
 });
 
-// Preview audio
-document.getElementById('audioUpload').addEventListener('change', e => {
-  const file = e.target.files[0];
-  if (file) {
-    document.getElementById('audioPlayer').src = URL.createObjectURL(file);
-  }
-});
-
-// Save data to backend
-document.getElementById('saveBtn').addEventListener('click', async () => {
-  const mood = document.getElementById('mood').value;
-  const text = document.getElementById('text').value;
+// 🔮 Generate button logic
+document.getElementById('generateBtn').addEventListener('click', async () => {
   const imageFile = document.getElementById('imageUpload').files[0];
-  const audioFile = document.getElementById('audioUpload').files[0];
+  if (!imageFile) {
+    alert("Please upload an image first.");
+    return;
+  }
 
   const formData = new FormData();
-  formData.append('mood', mood);
-  formData.append('text', text);
-  if (imageFile) formData.append('image', imageFile);
-  if (audioFile) formData.append('audio', audioFile);
+  formData.append('image', imageFile);
 
-  const res = await fetch('/api/diary', {
+  const res = await fetch('/api/generate', {
     method: 'POST',
     body: formData
   });
 
   const result = await res.json();
-  alert(result.message || 'Saved!');
+  console.log(result);
+  document.getElementById('text').value = result.text || '';
+  document.getElementById('audioPlayer').src = `/audio/${result.audio_path}`;
+  document.getElementById('tone').textContent = result.tone || '';
+  document.getElementById('persona').textContent = result.persona || '';
+  document.getElementById('voice').textContent = result.voice || '';
+});
+
+// 💾 Save button logic
+document.getElementById('saveBtn').addEventListener('click', async () => {
+  const text = document.getElementById('text').value;
+  const tone = document.getElementById('tone').textContent;
+  const persona = document.getElementById('persona').textContent;
+  const voice = document.getElementById('voice').textContent;
+  const audio = document.getElementById('audioPlayer').src;
+
+  const entry = {
+    text,
+    tone,
+    persona,
+    voice,
+    audio_path: audio.replace('/static/', '')  // backend expects relative path
+  };
+
+  const res = await fetch('/api/diary', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(entry)
+  });
+
+  const result = await res.json();
+  alert(result.message || "Diary saved.");
 });

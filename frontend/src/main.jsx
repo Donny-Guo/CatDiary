@@ -11,17 +11,32 @@ import './index.css'
 
 const app = document.getElementById('app');
 const diaryForm = `
-<div class='diary-interface' style="font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; background-color: #fefefe; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-  <h2 style="color: #333;">📸 Upload Cat Image</h2>
-  <input type="file" id="imageUpload" accept="image/*" style="margin-bottom: 10px;"><br>
-  <div style="margin-bottom: 20px; align-items: center;">
-    <img id="previewImg" style="border: 1px solid #ccc; border-radius: 8px; margin-top: 10px; width: 600px;">
+<div class='diary-interface'>
+
+  <div class="upload-session">
+    <div class="upload-photo">
+      <p class="upload-guide-text">Drag & Drop your cat's photo here</p>
+      <input type="file" id="imageUpload" accept="image/*" class="image-input js-image-input">
+      <button onclick="
+        document.querySelector('.js-image-input').click();" 
+        class="upload-button">
+        Upload
+      </button>
+    </div>
   </div>
 
-  <button id="generateBtn" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 6px; cursor: pointer;">🔮 Generate Diary</button><br><br>
+  <div class="image-preview-session">
+    <img id="previewImg">
+  </div>
+
+  <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+    <button id="generateBtn" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 6px; cursor: pointer;">🔮 Generate Diary</button>
+  </div>
 
   <h2 style="color: #333;">📝 Generated Diary</h2>
-  <textarea id="text" placeholder="Diary will appear here..." rows="15" cols="100" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; resize: vertical; background-color: rgba(0,0,0,0.05); color: black;"></textarea><br>
+  <div style="display: flex; justify-content: center;">
+    <textarea id="text" class="diary-text" placeholder="Diary will appear here..." rows="15" cols="120" ></textarea>
+  </div>
 
   <p style='color: black;'><strong>Mood:</strong> <span id="tone"></span></p>
 

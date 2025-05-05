@@ -1,11 +1,10 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color-scheme: light;
+  background-color: rgba(0, 0, 0, 0.05);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -29,6 +28,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  font-family: Arial, sans-serif;
 }
 
 h1 {
@@ -37,22 +37,7 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 
 @media (prefers-color-scheme: light) {
@@ -66,4 +51,84 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+.logout-button {
+  font-size: 18px;
+  border: 1px solid grey;
+  border-radius: 5px;
+  background-color: #dddbdb;
+}
+
+.upload-session {
+  display: flex;
+  flex-direction: column;
+  color: black;
+}
+
+.upload-photo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 50px;
+}
+
+.upload-guide-text {
+  color: rgb(71, 70, 70);
+  text-align: center;
+}
+
+.image-input {
+  display: none;
+}
+
+.upload-button {
+  height: 40px;
+  border: none;
+  border-radius: 20px;
+  background-color: rgb(231, 101, 8);
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
+  transition: background-color 0.2s;
+}
+
+.upload-button:hover {
+  background-color: rgba(231, 101, 8, 0.85);
+}
+
+.upload-button:active {
+  background-color: rgba(231, 101, 8, 0.80);
+}
+
+.diary-interface {
+  padding: 20px;
+  background-color: #fefefe;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.image-preview-session {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+#previewImg {
+  border-radius: 8px;
+  margin-top: 10px;
+  width: 400px;
+}
+
+.diary-text {
+  width: 100%;
+  padding: 10px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  resize: vertical;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: black;
 }

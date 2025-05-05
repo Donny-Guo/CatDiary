@@ -17,7 +17,7 @@ You’ll find out — whether you’re ready or not.
 Built for Dumb Hackathon. No cats were emotionally harmed.
 Sponsored by Stytch... but emotionally powered by tuna withdrawal.
 
-**"Built for Dumb Hackathon, this app answers the question no one asked: "** 
+**Built for Dumb Hackathon, this app answers the question no one asked:** 
 **“What is my cat really thinking?”**
 
 ---

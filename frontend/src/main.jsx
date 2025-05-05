@@ -11,24 +11,46 @@ import './index.css'
 
 const app = document.getElementById('app');
 const diaryForm = `
-  <div>
-    <h2>📸 Upload Cat Image</h2>
-    <input type="file" id="imageUpload" accept="image/*"><br>
-    <img id="previewImg" width="200"/><br><br>
-
-    <button id="generateBtn">🔮 Generate Diary</button><br><br>
-
-    <h2>📝 Generated Diary</h2>
-    <textarea id="text" placeholder="Diary will appear here..." rows="6" cols="40"></textarea><br>
-    <p><strong>Tone:</strong> <span id="tone"></span></p>
-    <p><strong>Persona:</strong> <span id="persona"></span></p>
-    <p><strong>Voice:</strong> <span id="voice"></span></p>
-
-    <audio id="audioPlayer" controls></audio><br><br>
-
-    <button id="saveBtn">💾 Save Diary</button>
+<div class='diary-interface' style="font-family: Arial, sans-serif; max-width: 800px; margin: auto; padding: 20px; background-color: #fefefe; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+  <h2 style="color: #333;">📸 Upload Cat Image</h2>
+  <input type="file" id="imageUpload" accept="image/*" style="margin-bottom: 10px;"><br>
+  <div style="margin-bottom: 20px; align-items: center;">
+    <img id="previewImg" style="border: 1px solid #ccc; border-radius: 8px; margin-top: 10px; width: 600px;">
   </div>
+
+  <button id="generateBtn" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 6px; cursor: pointer;">🔮 Generate Diary</button><br><br>
+
+  <h2 style="color: #333;">📝 Generated Diary</h2>
+  <textarea id="text" placeholder="Diary will appear here..." rows="15" cols="100" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; resize: vertical; background-color: rgba(0,0,0,0.05); color: black;"></textarea><br>
+
+  <p style='color: black;'><strong>Mood:</strong> <span id="tone"></span></p>
+
+  <audio id="audioPlayer" controls style="margin-top: 15px; width: 100%;"></audio><br><br>
+
+  <button id="saveBtn" style="padding: 10px 20px; background-color: #2196F3; color: white; border: none; border-radius: 6px; cursor: pointer;">💾 Save Diary</button>
+</div>
+
 `;
+// const diaryForm = `
+//   <div class='diary-interface'>
+//     <h2>📸 Upload Cat Image</h2>
+//     <input type="file" id="imageUpload" accept="image/*"><br>
+//     <div><img id="previewImg" width="200"></div>
+    
+
+//     <button id="generateBtn">🔮 Generate Diary</button><br><br>
+
+//     <h2>📝 Generated Diary</h2>
+//     <textarea id="text" placeholder="Diary will appear here..." rows="15" cols="100"></textarea><br>
+//     <p><strong>Tone:</strong> <span id="tone"></span></p>
+//     <p><strong>Persona:</strong> <span id="persona"></span></p>
+//     <p><strong>Voice:</strong> <span id="voice"></span></p>
+
+//     <audio id="audioPlayer" controls></audio><br><br>
+
+//     <button id="saveBtn">💾 Save Diary</button>
+//   </div>
+// `;
 
 app.innerHTML = diaryForm;
 

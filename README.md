@@ -1,6 +1,22 @@
-# 🐾 CatDiary: AI-Powered Cat Mood Translator
+# 🐾 CatDiary — Because Your Cat Deserves a Voice (Even If It’s a Little Judgy)
 
-CatDiary lets you upload a photo of your cat and receive a hilariously accurate AI-generated diary entry — complete with a dramatic or grumpy voiceover.
+Ever stared into your cat’s eyes and thought,
+“She’s definitely silently judging me... but what exactly is she thinking?”
+
+CatDiary is an overengineered solution to a deeply unserious problem:
+Just upload a photo of your cat.
+✨ Behind the scenes, something strange happens.
+The app analyzes your cat’s vibe...
+🖼️ It looks deep into the image…
+📖 Weaves an emotionally charged story based on the scene…
+🎙️ Then reads it out loud — in a voice that matches your cat’s mood.
+
+Is your cat a dramatic poet? A grumpy aristocrat? A jealous diva?
+You’ll find out — whether you’re ready or not.
+
+Built in 6 hours. No cats were emotionally harmed.
+Sponsored by Stytch... but emotionally powered by tuna withdrawal.
+
 
 Built for Dumb Hackathon, this app answers the question no one asked:  
 **“What is my cat really thinking?”**

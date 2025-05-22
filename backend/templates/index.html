@@ -3,30 +3,64 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title>CatDiary</title>
-  <script type="module" src="http://localhost:5173/src/main.jsx"></script>
+  <meta charset="UTF-8" />
+  <title>CatDiary - Test</title>
 </head>
 
 <body>
   <h1>📔 Welcome to Your CatDiary</h1>
 
   {% if user_id %}
-  <p>✅ Logged in as: <strong>{{ user_id }}</strong></p>
+    <p>✅ Logged in as: <strong>{{ user_id }}</strong></p>
 
-  <form method="POST" action="/logout">
-    <button type="submit" class="logout-button">Logout</button>
-  </form>
+    <form method="POST" action="/logout">
+      <button type="submit">Logout</button>
+    </form>
 
-  <hr />
-  <div id="app"></div> <!-- Vite mounts dynamic UI here -->
+    <hr />
+
+    <h2>🖼️ Upload a Cat Photo to Generate Diary</h2>
+    <form id="upload-form" enctype="multipart/form-data">
+      <input type="file" name="image" accept="image/*" required />
+      <button type="submit">Upload & Generate</button>
+    </form>
+
+    <div id="result" style="margin-top: 30px;">
+      <h3>Generated Diary:</h3>
+      <p id="diary-text"></p>
+      <audio id="diary-audio" controls style="display:none;"></audio>
+    </div>
+
+    <script>
+      const form = document.getElementById('upload-form');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const response = await fetch('/api/generate', {
+          method: 'POST',
+          body: formData,
+        });
+
+        const data = await response.json();
+        document.getElementById('diary-text').textContent = data.text || 'No text generated.';
+        
+        const audio = document.getElementById('diary-audio');
+        if (data.audio_path) {
+          audio.src = `/audio/${data.audio_path}`;
+          audio.style.display = 'block';
+        }
+
+        console.log('📤 Response from server:', data);
+      });
+    </script>
 
   {% else %}
-  <h2>Login via Email Magic Link</h2>
-  <form method="POST" action="/login">
-    <input type="email" name="email" placeholder="Enter your email" required />
-    <button type="submit">Send Magic Link</button>
-  </form>
+    <h2>Login</h2>
+    <form method="POST" action="/login">
+      <input type="email" name="email" placeholder="Enter your email" required />
+      <button type="submit">Send Magic Link</button>
+    </form>
   {% endif %}
 </body>
 

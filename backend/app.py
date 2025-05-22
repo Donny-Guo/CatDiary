@@ -6,16 +6,18 @@ import os, json, dotenv
 from stytch import Client
 from stytch.core.response_base import StytchError
 from cat_diary import generate_cat_diary_all_from_image
+from save_diary import save_diary_to_supabase
+
 
 # load the .env file
 dotenv.load_dotenv()
 
-# Load stytch client
-stytch_client = Client(
-  project_id=os.getenv("STYTCH_PROJECT_ID"),
-  secret=os.getenv("STYTCH_SECRET"),
-  environment="test"
-)
+# # Load stytch client
+# stytch_client = Client(
+#   project_id=os.getenv("STYTCH_PROJECT_ID"),
+#   secret=os.getenv("STYTCH_SECRET"),
+#   environment="test"
+# )
 
 app = Flask(
     __name__,
@@ -65,9 +67,9 @@ def authenticate():
 
 
 # # Fake login for dev (replace with Stytch later)
-# @app.before_request
-# def mock_login():
-#     session['user_id'] = 'user123'  # ← mock a logged-in user
+@app.before_request
+def mock_login():
+    session['user_id'] = 'user123'  # ← mock a logged-in user
 
 def create_user_dirs(user_id):
     base_path = os.path.join('../diary', user_id)
@@ -126,10 +128,23 @@ def generate_diary_from_image():
 
     try:
         result = generate_cat_diary_all_from_image(image_path, audio_path)
-        # result['image'] = f"images/{image_filename}"
         result['image'] = image_path
         result['audio_path'] = audio_filename
+
+        # 將檔案儲存位置轉為對外可讀的 URL
+        image_url = f"/static/uploads/{user_id}/images/{image_filename}"
+        audio_url = f"/static/uploads/{user_id}/audio/{audio_filename}"
+
+        # 儲存到 Supabase
+        save_diary_to_supabase(
+            user_id=user_id,
+            image_url=image_url,
+            diary_text=result['text'],
+            audio_url=audio_url
+        )
+
         return jsonify(result)
+
     except Exception as e:
         print("Diary generation failed:", e)
         return jsonify({
@@ -189,6 +204,27 @@ def get_diary():
         with open(diary_file, 'r') as f:
             return jsonify(json.load(f))
     return jsonify([])
+
+
+@app.route('/api/test-save', methods=['GET'])
+def test_save_diary_to_supabase():
+    user_id = session.get('user_id') or "test_user"
+
+    from datetime import datetime
+    test_diary_text = f"This is a test entry at {datetime.now().isoformat()}."
+    test_image_url = "/test/image.jpg"
+    test_audio_url = "/test/audio.mp3"
+
+    from save_diary import save_diary_to_supabase
+    save_diary_to_supabase(
+        user_id=user_id,
+        image_url=test_image_url,
+        diary_text=test_diary_text,
+        audio_url=test_audio_url
+    )
+
+    return jsonify({"message": "✅ Test diary saved!"})
+
 
 
 if __name__ == '__main__':
